@@ -83,3 +83,27 @@ app.listen(port, () => {
     console.log(`Servidor rodando no endereço: http://localhost:${port}`)
 })
 
+
+
+
+app.post("/registro", (req, res) => {
+    const user = req.body.username;
+    const password = req.body.password;
+    const confirm = req.body.confirmPassword;
+    const email = req.body.email;
+
+    if (password !== confirm) {   
+        console.log('Senhas Divergentes')
+        res.sendFile(__dirname + '/erro.html'); // Envia para a página de erro
+    } else {
+        db.query('INSERT INTO usuario (username, email, password) VALUES (?, ?, ?)', [user, email, password], (error, results) => {
+            if (error) {
+                console.error("Erro ao inserir usuário no banco de dados:", error);
+                res.sendFile(__dirname + '/erro.html'); // Envia para a página de erro
+            } else {
+                console.log('Usuário cadastrado com sucesso!');
+                res.sendFile(__dirname + '/index.html'); // Envia para a página inicial
+            }
+        });
+    }
+});
