@@ -61,26 +61,27 @@
     </div> 
 
 
-
-
     <script>
       document.getElementById("cadastroForm").addEventListener("submit", function(event){
         const password = document.getElementById("password").value;
         const confirma = document.getElementById("confirmeSenha").value;
-
-      
-        if (password !== confirm){
+        const confirmGroup = document.getElementById("confirm-group");
+        
+        // Remove qualquer alerta anteriormente adicionado
+        const existingAlert = document.querySelector("#confirm-group .alert");
+        if(existingAlert) {
+          existingAlert.remove();
+        }
+        
+        if (password !== confirm) {
           let span = document.createElement("span");
           span.classList.add("alert");
-          span.textContent = "As senhas não concidem";
-          document.getElementById("confirm-group").appendChild(span);
-          event.preventDefault ();
-      
+          span.textContent = "As senhas não coincidem";
+          confirmGroup.appendChild(span);
+          event.preventDefault();
         }
-      
-      })
-      </script>
-      
+      });
+    </script>
 
 
   
